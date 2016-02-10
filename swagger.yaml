@@ -1,0 +1,356 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Columba API
+  description: Donate your wasted SMS for charity!
+  version: "1.0.0"
+# the domain of the service
+host: www.columbasms.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /api/v1
+produces:
+  - application/json
+paths:
+  /campaigns:
+    get:
+      summary: Tutte le campagne
+      description: |
+        L'endpoint *campaigns* ritorna la lista di tutte le campagne disponibili,
+        sia scadute che non.
+      parameters:
+        - name: order_field
+          in: query
+          description: Il campo di ordinamento delle campagne
+          required: false
+          type: string
+        - name: order_type
+          in: query
+          description: Il tipo di ordinamento che bisogna attuare. DEVE essere o *asc* o *desc*
+          required: false
+          enum: [asc, desc]
+          type: string
+        - name: limit
+          in: query
+          description: Il numero massimo di elementi che devono essere ritornati.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Da quale elemento nel database deve partire l'array
+          required: false
+          type: integer
+      tags:
+        - Campaigns
+      responses:
+        200:
+          description: L'array di campagne
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Campaign'
+  /campaigns/{id}:
+    get:
+      summary: Singola campagna
+      description: Ritorna una singola campagna
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id della campagna richiesta
+      tags:
+        - Campaigns
+      responses:
+        200:
+          description: La campagna richiesta
+          schema:
+            $ref: '#/definitions/Campaign'
+  /organizations:
+    get:
+      summary: Tutte le organizzazioni
+      description: Ritorna tutte le organizzazioni con possibilità di filtraggio
+      parameters:
+        - name: order_field
+          in: query
+          description: Il campo di ordinamento delle organizzazioni
+          required: false
+          type: string
+        - name: order_type
+          in: query
+          description: Il tipo di ordinamento che bisogna attuare. DEVE essere o *asc* o *desc*
+          required: false
+          enum: [asc, desc]
+          type: string
+        - name: limit
+          in: query
+          description: Il numero massimo di elementi che devono essere ritornati.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Da quale elemento nel database deve partire l'array
+          required: false
+          type: integer
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: Le organizzazioni richieste
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+  /organizations/{id}:
+    get:
+      summary: La singola organizzazione
+      description: Ritorna una singola organizzazione
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'organizzazione richiesta
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: L'organizzazione richiesta
+          schema:
+            $ref: '#/definitions/Organization'
+  /organizations/{id}/campaigns:
+    get:
+      summary: Tutte le campagne lanciate dall'organizzazione
+      description: Ritorna tutte le campagne lanciate dall'organizzazione con id {id}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'organizzazione richiesta
+      tags:
+        - Organizations
+        - Campaigns
+      responses:
+        200:
+          description: Le campagne dell'organizzazione
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Campaign'
+  /topics:
+    get:
+      summary: Tutti i topic
+      description: Ritorna tutti i topic
+      parameters:
+        - name: order_field
+          in: query
+          description: Il campo di ordinamento delli topic
+          required: false
+          type: string
+        - name: order_type
+          in: query
+          description: Il tipo di ordinamento che bisogna attuare. DEVE essere o *asc* o *desc*
+          required: false
+          enum: [asc, desc]
+          type: string
+        - name: limit
+          in: query
+          description: Il numero massimo di elementi che devono essere ritornati.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Da quale elemento nel database deve partire l'array
+          required: false
+          type: integer
+      tags:
+        - Topics
+      responses:
+        200:
+          description: L'array di topic
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Topic'
+  /topics/{id}:
+    get:
+      summary: Il singolo topic
+      description: Ritorna il singolo topic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id del topic
+      tags:
+        - Topics
+      responses:
+        200:
+          description: Il topic richiesto
+          schema:
+            $ref: '#/definitions/Topic'
+  /topics/{id}/campaigns:
+    get:
+      summary: Tutte le campagne del topic
+      description: Ritorna tutte le campagne del topic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id del topic
+      tags:
+        - Topics
+        - Campaigns
+      responses:
+        200:
+          description: Le campagne del topic
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Campaign'
+  /topics/{id}/organizations:
+    get:
+      summary: Tutte le organizzazioni del topic
+      description: Ritorna tutte le organizzazioni del topic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id del topic
+      tags:
+        - Topics
+        - Organizations
+      responses:
+        200:
+          description: Le organizzazioni del topic
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+  /users:
+    post:
+      summary: Regitrazione utente
+      description: Questo endpoint regitra l'utente alla piattaforma
+      parameters:
+        - name: X-Auth-Service-Provider
+          in: header
+          required: true
+          type: string
+          description: Il provider per performate l'autenticazione
+        - name: X-Verify-Credential-Authorization
+          in: header
+          required: true
+          type: string
+          description: Le credenziali per l'autenticazione
+        - name: gcm-token
+          in: header
+          required: true
+          type: string
+          description: Il token di registrazione per Google Cloud Messaging
+      tags:
+        - Users
+      responses:
+        200:
+          description: L'utente è correttamente registrato alla piattaforma
+          schema:
+            $ref: '#/definitions/DigitsClient'
+  /users/{id}:
+    get:
+      summary: Il singolo utente
+      description: Ritorna il singolo utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      tags:
+        - Users
+      responses:
+        200:
+          description: L'utente richiesto
+          schema:
+            $ref: '#/definitions/DigitsClient'
+  /users/{id}/campaigns:
+    get:
+      summary: Tutte le campagne reindirizzate dall'utente
+      description: Ritorna tutte le campagne che l'utente ha reindirizzato
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      tags:
+        - Users
+        - Campaigns
+      responses:
+        200:
+          description: Le campagne dell'utente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Campaign'
+definitions:
+  Campaign:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: L'id della campagna.
+      message:
+        type: string
+        description: Il messaggio che andrà inviato per SMS.
+      organization:
+        $ref: '#/definitions/Organization'
+      topics:
+        type: array
+        description: I topic a cui è associata la campagna.
+        items:
+          $ref: '#/definitions/Topic'
+  Organization:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: L'id dell'organizzazione.
+      organization_name:
+        type: string
+        description: Il nome dell'organizzazione.
+      avatar_normal:
+        type: string
+        description: Il link dell'immagine di profilo dell'organizzazione
+      cover_normal:
+        type: string
+        description: Il link dell'immagine di copertina dell'organizzazione
+      description:
+        type: string
+        description: Una breve descrizione dell'organizzazione, dei suoi scopi e delle sue iniziative
+  Topic:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: L'id del topic
+      name:
+        type: string
+        description: Il nome del topic
+  DigitsClient:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: L'id dell'utente
+      digits_id:
+        type: integer
+        description: L'id generato da digits al momento della registrazione
+      digits_token:
+        type: string
+        description: Il token generato da digits al momento della registrazione
+  
