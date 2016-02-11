@@ -297,6 +297,82 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Campaign'
+              
+  /users/{id}/campaigns/{campaign_id}:
+    post:
+      summary: Lancia campagna
+      description: Data una lista di numeri, ritorna quelli a cui l'utente {id} può lanciare la campagna {campaign_id}.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L\'id dell\'utente
+        - name: campaign_id
+          in: path
+          required: true
+          type: integer
+          description: L\'id della campagna
+        - name: receivers numbers
+          in: body
+          required: true
+          schema:
+            type: object 
+            properties:
+              users:
+                type: array
+                items:
+                  type: string
+          description: Lista numeri dei riceventi della campagna
+          
+      responses:
+        200:
+          description: indici numeri a cui reinviare la campagna
+          schema:
+            type: object 
+            properties:
+              users:
+                type: array
+                items:
+                  type: string
+  
+  /users/{id}/organizations:
+    get:
+      summary: Tutte le organizzazioni seguite dall'utente 
+      description: Ritorna tutte la organizzazioni seguite dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      responses:
+        200:
+          description: Organizzazioni
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organization"
+              
+  /users/{id}/topics:
+    get:
+      summary: Tutti i topic seguiti dall'utente 
+      description: Ritorna tutte i topic seguiti dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      responses:
+        200:
+          description: Topics
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Topic"
+                
+    
 definitions:
   Campaign:
     type: object
