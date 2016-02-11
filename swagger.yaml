@@ -277,6 +277,136 @@ paths:
           description: L'utente richiesto
           schema:
             $ref: '#/definitions/DigitsClient'
+    put:
+      summary: Aggiorna l'utente
+      description: aggiorna i campi desiderati dell'utente e ritorna in output la rappresentazione aggiornata dell'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: fields
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              digits_id:
+                type: integer
+                description: L'id generato da digits al momento della registrazione
+              digits_token:
+                type: string
+                description: Il token generato da digits al momento della registrazione
+              digits_secret:
+                type: string
+                description: Il token segreto generato da digits al momento della registrazione
+              phone_number:
+                type: string
+                description: Il numero telefonico dell'utente associato a digits
+              gcm_token:
+                type: string
+                description: Il token generato da GCM
+          description: Oggetto Json contenente i campi da modificare
+         
+      tags:
+        - Users
+      responses:
+        200:
+          description: L'utente aggiornato
+          schema:
+            $ref: '#/definitions/DigitsClient'
+  /users/{id}/organizations:
+    get:
+      summary: Tutte le organizzazioni seguite dall'utente 
+      description: Ritorna tutte la organizzazioni seguite dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      tags:
+        - Users
+        - Organizations
+      responses:
+        200:
+          description: Organizzazioni
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organization"
+  /users/{id}/organizations/{organization_id}:
+    put:
+      summary: follow organization
+      description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e l'organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: organization_id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'organizzazione
+      tags:
+        - Users
+        - Organizations
+      responses:
+        200:
+          description: Organizzazioni
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organization"  
+  /users/{id}/topics:
+    get:
+      summary: Tutti i topic seguiti dall'utente 
+      description: Ritorna tutte i topic seguiti dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+      tags:
+        - Users
+        - Topics
+      responses:
+        200:
+          description: Topics
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Topic"
+  /users/{id}/topics/{topic_id}:
+    put:
+      summary: follow topic
+      description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e il topic {topic_id}. Ritorna tutti i topic seguiti dall'utente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: topic_id
+          in: path
+          required: true
+          type: integer
+          description: L'id del topic
+      tags:
+        - Users
+        - Topics
+      responses:
+        200:
+          description: Topics
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Topic"
+      
   /users/{id}/campaigns:
     get:
       summary: Tutte le campagne reindirizzate dall'utente
@@ -297,7 +427,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Campaign'
-              
   /users/{id}/campaigns/{campaign_id}:
     post:
       summary: Lancia campagna
@@ -324,7 +453,9 @@ paths:
                 items:
                   type: string
           description: Lista numeri dei riceventi della campagna
-          
+      tags:
+        - Users
+        - Campaigns  
       responses:
         200:
           description: indici numeri a cui reinviare la campagna
@@ -335,42 +466,6 @@ paths:
                 type: array
                 items:
                   type: string
-  
-  /users/{id}/organizations:
-    get:
-      summary: Tutte le organizzazioni seguite dall'utente 
-      description: Ritorna tutte la organizzazioni seguite dall'utente
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          description: L'id dell'utente
-      responses:
-        200:
-          description: Organizzazioni
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Organization"
-              
-  /users/{id}/topics:
-    get:
-      summary: Tutti i topic seguiti dall'utente 
-      description: Ritorna tutte i topic seguiti dall'utente
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          description: L'id dell'utente
-      responses:
-        200:
-          description: Topics
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Topic"
                 
     
 definitions:
