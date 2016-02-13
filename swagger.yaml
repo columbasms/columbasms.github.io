@@ -22,6 +22,11 @@ paths:
         L'endpoint *campaigns* ritorna la lista di tutte le campagne disponibili,
         sia scadute che non.
       parameters:
+        - name: user_id
+          in: query
+          description: id dell'utente secondo le cui preferenze si vogliono filtrare le campagne
+          required: false
+          type: integer
         - name: order_field
           in: query
           description: Il campo di ordinamento delle campagne
@@ -363,8 +368,8 @@ paths:
               $ref: "#/definitions/Organization"  
   /users/{id}/topics:
     get:
-      summary: Tutti i topic seguiti dall'utente 
-      description: Ritorna tutte i topic seguiti dall'utente
+      summary: Users Topics
+      description: Restituisce tutti i topic attivi indicando se l'user li segue o meno 
       parameters:
         - name: id
           in: path
@@ -484,7 +489,7 @@ definitions:
         type: array
         description: I topic a cui è associata la campagna.
         items:
-          $ref: '#/definitions/Topic'
+          $ref: '#/definitions/Topic' 
   Organization:
     type: object
     properties:
@@ -512,6 +517,12 @@ definitions:
       name:
         type: string
         description: Il nome del topic
+      main_color:
+        type: string
+        description: main color
+      status_color:
+        type: string
+        description: status color
   DigitsClient:
     type: object
     properties:
