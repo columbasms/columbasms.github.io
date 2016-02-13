@@ -344,7 +344,7 @@ paths:
   /users/{id}/organizations/{organization_id}:
     put:
       summary: follow organization
-      description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e l'organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall'utente
+      description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e l'organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall'utente. Se presente il parametro ?trusted permette di impostare il TRUST sull'organizzazione seguita. Fare UNFOLLOW implica levare il TRUST
       parameters:
         - name: id
           in: path
@@ -356,12 +356,17 @@ paths:
           required: true
           type: integer
           description: L'id dell'organizzazione
+        - name: trusted
+          in: query
+          type: boolean
+          default: false 
+          description: trust dell'organizzazione
       tags:
         - Users
         - Organizations
       responses:
         200:
-          description: Organizzazioni
+          description: Organizzazioni seguite
           schema:
             type: array
             items:

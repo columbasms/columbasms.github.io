@@ -178,7 +178,7 @@
   <h2><a name="usersIdOrganizationsOrganizationIdPut"></a>usersIdOrganizationsOrganizationIdPut</h2>
   <hr>
   <p></p>
-  <p>Interpola la relazione FOLLOW/UNFOLLOW tra l&#39;utente {id} e l&#39;organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall&#39;utente</p>
+  <p>Interpola la relazione FOLLOW/UNFOLLOW tra l&#39;utente {id} e l&#39;organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall&#39;utente. Se presente il parametro ?trusted permette di impostare il TRUST sull&#39;organizzazione seguita. Fare UNFOLLOW implica levare il TRUST</p>
   <h3 class="section">URL</h3>
   <code>https://www.columbasms.com/api/v1/users/{id}/organizations/{organization_id}</code>
   <h3 class="section">HTTP Method</h3>
@@ -210,6 +210,18 @@
       <span class="param-type">Integer</span>
       
       <p class="param-description">L&#39;id dell&#39;organizzazione</p>
+	  </li>
+    
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">trusted</span>
+      <span class="param-type">Boolean</span>
+      
+      <p class="param-description">trust dell&#39;organizzazione</p>
 	  </li>
     
   </ul>
