@@ -342,10 +342,55 @@ paths:
             items:
               $ref: "#/definitions/Organization"
   /users/{id}/organizations/{organization_id}:
+    get:
+      summary: relazione user organizzazione
+      description: Ritorna tutti i dati utili dell'organizzazione con l'aggiunta dello stato della relazione tra i due enti
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: organization_id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'organizzazione
+      tags:
+        - Users
+        - Organizations
+      responses:
+        200:
+          description: info organizzazione
+          schema:
+            type: object
+            properties:
+              organization_name:
+                type: string
+                description: Il nome dell'organizzazione.
+              avatar_normal:
+                type: string
+                description: Il link dell'immagine di profilo dell'organizzazione
+              cover_normal:
+                type: string
+                description: Il link dell'immagine di copertina dell'organizzazione
+              description:
+                type: string
+                description: Una breve descrizione dell'organizzazione, dei suoi scopi e delle sue iniziative
+              follower:
+                type: integer
+                description: numero di follower
+              following:
+                type: boolean
+                description: se l'utente segue l'organizzazione o no
+              trusting:
+                type: boolean
+                description: se l'utente ha fatto il trust sull'organizzazione
+          
     put:
       summary: follow organization
       description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e l'organizzazione {organization_id}. Ritorna tutte le organizzazioni seguite dall'utente. Se presente il parametro ?trusted permette di impostare il TRUST sull'organizzazione seguita. Fare UNFOLLOW implica levare il TRUST
-      parameters:
+      parameters: 
         - name: id
           in: path
           required: true
@@ -392,6 +437,32 @@ paths:
             items:
               $ref: "#/definitions/Topic"
   /users/{id}/topics/{topic_id}:
+    get:
+      summary: relazione user topic
+      description: restituisce true se l'utente segua il topic, false altrimenti
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: topic_id
+          in: path
+          required: true
+          type: integer
+          description: L'id del topic
+      tags:
+        - Users
+        - Topics
+      responses:
+        200:
+          description: Following?
+          schema:
+            type: object
+            properties:
+              following: 
+                type: boolean
+                
     put:
       summary: follow topic
       description: Interpola la relazione FOLLOW/UNFOLLOW tra l'utente {id} e il topic {topic_id}. Ritorna tutti i topic seguiti dall'utente
