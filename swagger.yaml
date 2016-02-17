@@ -312,6 +312,9 @@ paths:
               gcm_token:
                 type: string
                 description: Il token generato da GCM
+              user_name:
+                type: string
+                description: username
           description: Oggetto Json contenente i campi da modificare
          
       tags:
