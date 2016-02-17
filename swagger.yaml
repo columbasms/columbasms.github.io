@@ -321,6 +321,34 @@ paths:
           description: L'utente aggiornato
           schema:
             $ref: '#/definitions/DigitsClient'
+  /users/{id}/images:
+    post:
+      summary: Upload user images
+      description: Upload the new avatar and/or cover of the user
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: L'id dell'utente
+        - name: profile_image
+          in: query
+          required: false
+          type: string
+          description: new avatar image encoded as Base64 String
+        - name: cover_image
+          in: query
+          required: false
+          type: string
+          description: new cover image encoded as Base64 String
+      tags:
+        - Users
+      responses:
+        200:
+          description: L'utente aggiornato
+          schema:
+            $ref: '#/definitions/DigitsClient'
+      
   /users/{id}/organizations:
     get:
       summary: Tutte le organizzazioni seguite dall'utente 
