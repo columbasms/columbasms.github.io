@@ -7,7 +7,7 @@
   <h2><a name="campaignsGet"></a>campaignsGet</h2>
   <hr>
   <p></p>
-  <p>L&#39;endpoint *campaigns* ritorna la lista di tutte le campagne disponibili,\nsia scadute che non.</p>
+  <p>L&#39;endpoint *campaigns* ritorna la lista di tutte le campagne disponibili,\nsia scadute che non.\n</p>
   <h3 class="section">URL</h3>
   <code>https://www.columbasms.com/api/v1/campaigns</code>
   <h3 class="section">HTTP Method</h3>
@@ -160,6 +160,57 @@
     
   </ul>
   
+  <h2><a name="usersIdCampaignsCampaignIdPost"></a>usersIdCampaignsCampaignIdPost</h2>
+  <hr>
+  <p></p>
+  <p>Data una lista di numeri, ritorna quelli a cui l&#39;utente {id} pu\u00F2 lanciare la campagna {campaign_id}.</p>
+  <h3 class="section">URL</h3>
+  <code>https://www.columbasms.com/api/v1/users/{id}/campaigns/{campaign_id}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>POST</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="inline_response_200"><a href="">inline_response_200</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+  	
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">id</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">L\\&#39;id dell\\&#39;utente</p>
+	  </li>
+    
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">campaign_id</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">L\\&#39;id della campagna</p>
+	  </li>
+    
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">receivers numbers</span>
+      <span class="param-type">Receivers numbers(Receivers numbers)</span>
+      
+      <p class="param-description">Lista numeri dei riceventi della campagna</p>
+	  </li>
+    
+  </ul>
+  
   <h2><a name="usersIdCampaignsGet"></a>usersIdCampaignsGet</h2>
   <hr>
   <p></p>
@@ -183,57 +234,6 @@
       <span class="param-type">Integer</span>
       
       <p class="param-description">L&#39;id dell&#39;utente</p>
-	  </li>
-    
-  </ul>
-  
-  <h2><a name="usersIdCampaignsCampaignIdPost"></a>usersIdCampaignsCampaignIdPost</h2>
-  <hr>
-  <p></p>
-  <p>Data una lista di numeri, ritorna quelli a cui l&#39;utente {id} può lanciare la campagna {campaign_id}.</p>
-  <h3 class="section">URL</h3>
-  <code>https://www.columbasms.com/api/v1/users/{id}/campaigns/{campaign_id}</code>
-  <h3 class="section">HTTP Method</h3>
-  <code>POST</code>
-  <h3 class="section">Response Type</h3>
-  <div class="model" data-model="inline_response_200"><a href="">inline_response_200</a></div>
-  <h3 class="section">Parameters</h3>
-  <ul>
-  	
-	  <li class="parameter">
-      
-      
-      <span class="param-in">Path: </span>
-      
-      
-      <span class="param-name">id</span>
-      <span class="param-type">Integer</span>
-      
-      <p class="param-description">L\&#39;id dell\&#39;utente</p>
-	  </li>
-    
-	  <li class="parameter">
-      
-      
-      <span class="param-in">Path: </span>
-      
-      
-      <span class="param-name">campaign_id</span>
-      <span class="param-type">Integer</span>
-      
-      <p class="param-description">L\&#39;id della campagna</p>
-	  </li>
-    
-	  <li class="parameter">
-      
-      
-      
-      
-      <span class="param-in">Body: </span>
-      <span class="param-name">receivers numbers</span>
-      <span class="param-type">Receivers numbers</span>
-      
-      <p class="param-description">Lista numeri dei riceventi della campagna</p>
 	  </li>
     
   </ul>

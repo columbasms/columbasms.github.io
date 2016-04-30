@@ -578,9 +578,30 @@ paths:
                 type: array
                 items:
                   type: string
-                
+  /leaderboard:
+    get:
+      summary: Ritorna la classifica degli utenti
+      description: Ritorna la lista degli utenti ordinata per numero di messaggi inviati per formare la classifica
+      tags:
+        - Leaderboard
+      responses:
+        200:
+          description: La classifica degli utenti viene ritornata
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Leaderboard'
     
 definitions:
+  Leaderboard:
+    type: object
+    properties:
+      user_name: 
+        type: string
+      avatar_normal:
+        type: string
+      points:
+        type: integer
   Campaign:
     type: object
     properties:
